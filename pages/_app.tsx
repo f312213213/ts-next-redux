@@ -1,8 +1,22 @@
-import '../styles/globals.css'
+import React from 'react'
+import { useDispatch } from 'react-redux'
 import type { AppProps } from 'next/app'
 
-function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import { wrapper } from '../features/store'
+import { init } from '../features/app/slice'
+import '../styles/globals.css'
+
+const App = ({ Component, pageProps }: AppProps) => {
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(init())
+  }, [])
+
+  return (
+    <Component {...pageProps} />
+  )
 }
 
-export default App
+App.getInitialProps = wrapper.getInitialPageProps(store => () => {})
+export default wrapper.withRedux(App)
