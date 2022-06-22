@@ -4,7 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../features/store'
-import { fetchIncrement, fetchDecrement } from '../features/counter/slice'
+import { incrementRequest, decrementRequest } from '../features/counter/slice'
 import Button from '../components/Button'
 
 const Home: NextPage = () => {
@@ -14,7 +14,7 @@ const Home: NextPage = () => {
     <div className={'page'}>
       <Button
         text={'Decrement'}
-        func={fetchDecrement}
+        func={decrementRequest}
       />
 
       <p>
@@ -23,7 +23,7 @@ const Home: NextPage = () => {
 
       <Button
         text={'Increment'}
-        func={fetchIncrement}
+        func={incrementRequest}
       />
     </div>
   )

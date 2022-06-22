@@ -12,13 +12,6 @@ const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    increment: (state, action) => {
-      state.counter = action.payload
-    },
-    decrement: (state, action) => {
-      state.counter = action.payload
-    },
-    // @ts-ignore
     fetchInitRequest: {
       reducer: (state) => {
         state.status = 'LOADING'
@@ -27,14 +20,49 @@ const counterSlice = createSlice({
       prepare: () => ({})
     },
     fetchInitSuccess: (state, action) => {
-      state.counter = action.payload
+      const { number } = action.payload
+      state.counter = number
       state.status = 'SUCCESS'
     },
-    fetchInitRejected: (state, action) => {
+    fetchInitRejected: (state) => {
       state.counter = 999
       state.status = 'FAILURE'
     },
     fetchInitCanceled: () => initialState,
+    incrementRequest: {
+      reducer: (state, action) => {
+        state.status = 'LOADING'
+      },
+      // @ts-ignore
+      prepare: () => ({})
+    },
+    incrementSuccess: (state, action) => {
+      const { number } = action.payload
+      state.counter = number
+      state.status = 'SUCCESS'
+    },
+    incrementRejected: (state, action) => {
+      state.counter = 999
+      state.status = 'FAILURE'
+    },
+    incrementCanceled: () => initialState,
+    decrementRequest: {
+      reducer: (state, action) => {
+        state.status = 'LOADING'
+      },
+      // @ts-ignore
+      prepare: () => ({})
+    },
+    decrementSuccess: (state, action) => {
+      const { number } = action.payload
+      state.counter = number
+      state.status = 'SUCCESS'
+    },
+    decrementRejected: (state, action) => {
+      state.counter = 999
+      state.status = 'FAILURE'
+    },
+    decrementCanceled: () => initialState,
     fetchIncrement: (state) => {},
     fetchDecrement: (state) => {}
   },
@@ -47,15 +75,18 @@ const counterSlice = createSlice({
 })
 
 export const {
-  increment,
-  decrement,
-  initNumber,
   fetchInitRequest,
   fetchInitSuccess,
   fetchInitRejected,
   fetchInitCanceled,
-  fetchIncrement,
-  fetchDecrement
+  incrementRequest,
+  incrementSuccess,
+  incrementRejected,
+  incrementCanceled,
+  decrementRequest,
+  decrementSuccess,
+  decrementRejected,
+  decrementCanceled
 } = counterSlice.actions
 
 export default counterSlice

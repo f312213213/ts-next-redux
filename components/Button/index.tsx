@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 
 interface Props {
   text: string
-  func(): any
+  func: any
 }
 
 const Button = ({ text, func }: Props) => {

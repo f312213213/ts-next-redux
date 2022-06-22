@@ -14,7 +14,6 @@ const store = configureStore({
 
 export const makeStore = () => store
 
-// @ts-ignore
 epicMiddleware.run(epics)
 
 export const wrapper = createWrapper(makeStore, {
