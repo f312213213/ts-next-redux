@@ -62,9 +62,7 @@ const counterSlice = createSlice({
       state.counter = 999
       state.status = 'FAILURE'
     },
-    decrementCanceled: () => initialState,
-    fetchIncrement: (state) => {},
-    fetchDecrement: (state) => {}
+    decrementCanceled: () => initialState
   },
   extraReducers: {
     [HYDRATE]: (state, action) => ({
