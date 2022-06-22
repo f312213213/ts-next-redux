@@ -1,6 +1,6 @@
 import { catchError, mergeMap, map, Observable, of, takeUntil } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
-import api from '../../api/api'
+import api from '../../api'
 import * as slice from './slice'
 
 export const fetchInitRequestEpic = (action$: Observable<any>) => action$.pipe(

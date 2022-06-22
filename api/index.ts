@@ -1,7 +1,7 @@
 import * as counter from './counter'
 
-const api = {
+const index = {
   counter
 }
 
-export default api
+export default index
