@@ -11,12 +11,18 @@ const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    increment: (state) => {
-      state.counter += 1
+    increment: (state, action) => {
+      state.counter = action.payload
     },
-    decrement: (state) => {
-      state.counter -= 1
-    }
+    decrement: (state, action) => {
+      state.counter = action.payload
+    },
+    initNumber: (state, action) => {
+      state.counter = action.payload
+    },
+    fetchInit: (state) => {},
+    fetchIncrement: (state) => {},
+    fetchDecrement: (state) => {}
   },
   extraReducers: {
     [HYDRATE]: (state, action) => ({
@@ -26,6 +32,13 @@ const counterSlice = createSlice({
   }
 })
 
-export const { increment, decrement } = counterSlice.actions
+export const {
+  increment,
+  decrement,
+  initNumber,
+  fetchInit,
+  fetchIncrement,
+  fetchDecrement
+} = counterSlice.actions
 
 export default counterSlice

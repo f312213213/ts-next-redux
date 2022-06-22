@@ -4,16 +4,17 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../features/store'
-import { decrement, increment } from '../features/counter/slice'
+import { fetchIncrement, fetchDecrement } from '../features/counter/slice'
 import Button from '../components/Button'
 
 const Home: NextPage = () => {
   const counter = useSelector((state: RootState) => state.counter.counter)
+
   return (
     <div className={'page'}>
       <Button
         text={'Decrement'}
-        func={decrement}
+        func={fetchDecrement}
       />
 
       <p>
@@ -22,7 +23,7 @@ const Home: NextPage = () => {
 
       <Button
         text={'Increment'}
-        func={increment}
+        func={fetchIncrement}
       />
     </div>
   )

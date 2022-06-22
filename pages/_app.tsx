@@ -1,22 +1,22 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import type { AppProps } from 'next/app'
+import type { AppProps, AppContext } from 'next/app'
 
 import { wrapper } from '../features/store'
-import { init } from '../features/app/slice'
 import '../styles/globals.css'
+import { fetchInit } from '../features/counter/slice'
+import { init } from '../features/app/slice'
 
-const App = ({ Component, pageProps }: AppProps) => {
-  const dispatch = useDispatch()
-
-  React.useEffect(() => {
-    dispatch(init())
-  }, [])
-
+const App = ({ Component, pageProps }: AppContext & AppProps) => {
   return (
     <Component {...pageProps} />
   )
 }
 
-App.getInitialProps = wrapper.getInitialPageProps(store => () => {})
+App.getInitialProps = wrapper.getInitialPageProps(store => async () => {
+  await store.dispatch(fetchInit())
+  await store.dispatch(init())
+
+  return {}
+}
+)
 export default wrapper.withRedux(App)
