@@ -1,14 +1,23 @@
 import { catchError, mergeMap, map, Observable, of } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
-import { increment, decrement, initNumber } from './slice'
 import api from '../../api/api'
+import {
+  increment,
+  decrement,
+  fetchInitRequest,
+  fetchInitSuccess,
+  fetchInitRejected,
+  fetchInitCanceled,
+  fetchIncrement,
+  fetchDecrement
+} from './slice'
 
 export const fetchInitData = (action$: Observable<any>) => action$.pipe(
-  ofType('counter/fetchInit'),
+  ofType(fetchInitRequest.type),
   mergeMap(() =>
     api.counter.fetchInitData().pipe(
       mergeMap(response => {
-        return of(initNumber(response.number))
+        return of(fetchInitSuccess(response.number))
       }
       )
     )
@@ -16,7 +25,7 @@ export const fetchInitData = (action$: Observable<any>) => action$.pipe(
 )
 
 export const fetchIncrementData = (action$: Observable<any>) => action$.pipe(
-  ofType('counter/fetchIncrement'),
+  ofType(fetchIncrement.type),
   mergeMap(() =>
     api.counter.fetchIncrementData().pipe(
       mergeMap(response => {
@@ -28,7 +37,7 @@ export const fetchIncrementData = (action$: Observable<any>) => action$.pipe(
 )
 
 export const fetchDecrementData = (action$: Observable<any>) => action$.pipe(
-  ofType('counter/fetchDecrement'),
+  ofType(fetchDecrement.type),
   mergeMap(() =>
     api.counter.fetchDecrementData().pipe(
       mergeMap(response => {
