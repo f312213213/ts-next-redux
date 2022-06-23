@@ -3,7 +3,7 @@ import type { AppProps, AppContext } from 'next/app'
 
 import { wrapper } from '../features/store'
 import '../styles/globals.css'
-import { fetchInit } from '../features/counter/slice'
+import { fetchInitRequest } from '../features/counter/slice'
 import { init } from '../features/app/slice'
 
 const App = ({ Component, pageProps }: AppContext & AppProps) => {
@@ -13,7 +13,7 @@ const App = ({ Component, pageProps }: AppContext & AppProps) => {
 }
 
 App.getInitialProps = wrapper.getInitialPageProps(store => async () => {
-  await store.dispatch(fetchInit())
+  await store.dispatch(fetchInitRequest({}))
   await store.dispatch(init())
 
   return {}

@@ -4,25 +4,65 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { IState } from './interface'
 
 const initialState: IState = {
-  counter: 0
+  counter: 0,
+  status: 'INITAL'
 }
 
 const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    increment: (state, action) => {
-      state.counter = action.payload
+    fetchInitRequest: {
+      reducer: (state) => {
+        state.status = 'LOADING'
+      },
+      // @ts-ignore
+      prepare: () => ({})
     },
-    decrement: (state, action) => {
-      state.counter = action.payload
+    fetchInitSuccess: (state, action) => {
+      const { number } = action.payload
+      state.counter = number
+      state.status = 'SUCCESS'
     },
-    initNumber: (state, action) => {
-      state.counter = action.payload
+    fetchInitRejected: (state) => {
+      state.counter = 999
+      state.status = 'FAILURE'
     },
-    fetchInit: (state) => {},
-    fetchIncrement: (state) => {},
-    fetchDecrement: (state) => {}
+    fetchInitCanceled: () => initialState,
+    incrementRequest: {
+      reducer: (state, action) => {
+        state.status = 'LOADING'
+      },
+      // @ts-ignore
+      prepare: () => ({})
+    },
+    incrementSuccess: (state, action) => {
+      const { number } = action.payload
+      state.counter = number
+      state.status = 'SUCCESS'
+    },
+    incrementRejected: (state, action) => {
+      state.counter = 999
+      state.status = 'FAILURE'
+    },
+    incrementCanceled: () => initialState,
+    decrementRequest: {
+      reducer: (state, action) => {
+        state.status = 'LOADING'
+      },
+      // @ts-ignore
+      prepare: () => ({})
+    },
+    decrementSuccess: (state, action) => {
+      const { number } = action.payload
+      state.counter = number
+      state.status = 'SUCCESS'
+    },
+    decrementRejected: (state, action) => {
+      state.counter = 999
+      state.status = 'FAILURE'
+    },
+    decrementCanceled: () => initialState
   },
   extraReducers: {
     [HYDRATE]: (state, action) => ({
@@ -33,12 +73,18 @@ const counterSlice = createSlice({
 })
 
 export const {
-  increment,
-  decrement,
-  initNumber,
-  fetchInit,
-  fetchIncrement,
-  fetchDecrement
+  fetchInitRequest,
+  fetchInitSuccess,
+  fetchInitRejected,
+  fetchInitCanceled,
+  incrementRequest,
+  incrementSuccess,
+  incrementRejected,
+  incrementCanceled,
+  decrementRequest,
+  decrementSuccess,
+  decrementRejected,
+  decrementCanceled
 } = counterSlice.actions
 
 export default counterSlice
