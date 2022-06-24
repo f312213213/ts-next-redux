@@ -1,25 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import { IState } from './interface'
+import { IState, IIncrementPayload, IDecrementPayload, IInitPayload } from './interface'
 
 const initialState: IState = {
   counter: 0,
-  status: 'INITAL'
+  status: 'INITIAL'
 }
 
 const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    fetchInitRequest: {
-      reducer: (state) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    // 有需要用 request 帶入 default 參數時才需要多用 reducer
+    fetchInitRequest: (state) => {
+      state.status = 'LOADING'
     },
-    fetchInitSuccess: (state, action) => {
+    fetchInitSuccess: (state, action: PayloadAction<IInitPayload>) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
@@ -29,36 +26,28 @@ const counterSlice = createSlice({
       state.status = 'FAILURE'
     },
     fetchInitCanceled: () => initialState,
-    incrementRequest: {
-      reducer: (state, action) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    incrementRequest: (state) => {
+      state.status = 'LOADING'
     },
-    incrementSuccess: (state, action) => {
+    incrementSuccess: (state, action: PayloadAction<IIncrementPayload>) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
     },
-    incrementRejected: (state, action) => {
+    incrementRejected: (state) => {
       state.counter = 999
       state.status = 'FAILURE'
     },
     incrementCanceled: () => initialState,
-    decrementRequest: {
-      reducer: (state, action) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    decrementRequest: (state) => {
+      state.status = 'LOADING'
     },
-    decrementSuccess: (state, action) => {
+    decrementSuccess: (state, action: PayloadAction<IDecrementPayload>) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
     },
-    decrementRejected: (state, action) => {
+    decrementRejected: (state) => {
       state.counter = 999
       state.status = 'FAILURE'
     },

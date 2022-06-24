@@ -11,7 +11,7 @@ export const fetchInitRequestEpic = (action$: Observable<any>) => action$.pipe(
         return of(slice.fetchInitSuccess(response))
       }),
       takeUntil(action$.pipe(ofType(slice.fetchInitCanceled.type))),
-      catchError(() => of(slice.fetchInitRejected({})))
+      catchError(() => of(slice.fetchInitRejected()))
     )
   )
 )
@@ -24,7 +24,7 @@ export const incrementRequestEpic = (action$: Observable<any>) => action$.pipe(
         return of(slice.incrementSuccess(response))
       }),
       takeUntil(action$.pipe(ofType(slice.incrementCanceled.type))),
-      catchError(() => of(slice.incrementRejected({})))
+      catchError(() => of(slice.incrementRejected()))
     )
   )
 )
@@ -37,7 +37,7 @@ export const decrementRequestEpic = (action$: Observable<any>) => action$.pipe(
         return of(slice.decrementSuccess(response))
       }),
       takeUntil(action$.pipe(ofType(slice.decrementCanceled.type))),
-      catchError(() => of(slice.decrementRejected({})))
+      catchError(() => of(slice.decrementRejected()))
     )
   )
 )

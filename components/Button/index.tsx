@@ -1,12 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 
-interface Props {
-  text: string
-  func: any
-}
+import { IProps } from './interface'
 
-const Button = ({ text, func }: Props) => {
+const Button = ({ text, func }: IProps) => {
   const dispatch = useDispatch()
 
   return (

@@ -1,6 +1,5 @@
 import { Observable, from } from 'rxjs'
-
-const root = 'https://f-counter-api.vercel.app'
+import { root } from './index'
 
 export const fetchInitData = () => {
   const request = fetch(root)
