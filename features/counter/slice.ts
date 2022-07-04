@@ -5,19 +5,15 @@ import { IState } from './interface'
 
 const initialState: IState = {
   counter: 0,
-  status: 'INITAL'
+  status: 'INITIAL'
 }
 
 const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    fetchInitRequest: {
-      reducer: (state) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    fetchInitRequest: (state) => {
+      state.status = 'LOADING'
     },
     fetchInitSuccess: (state, action) => {
       const { number } = action.payload
@@ -29,12 +25,8 @@ const counterSlice = createSlice({
       state.status = 'FAILURE'
     },
     fetchInitCanceled: () => initialState,
-    incrementRequest: {
-      reducer: (state, action) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    incrementRequest: (state) => {
+      state.status = 'LOADING'
     },
     incrementSuccess: (state, action) => {
       const { number } = action.payload
@@ -46,12 +38,8 @@ const counterSlice = createSlice({
       state.status = 'FAILURE'
     },
     incrementCanceled: () => initialState,
-    decrementRequest: {
-      reducer: (state, action) => {
-        state.status = 'LOADING'
-      },
-      // @ts-ignore
-      prepare: () => ({})
+    decrementRequest: (state) => {
+      state.status = 'LOADING'
     },
     decrementSuccess: (state, action) => {
       const { number } = action.payload
@@ -75,16 +63,16 @@ const counterSlice = createSlice({
 export const {
   fetchInitRequest,
   fetchInitSuccess,
-  fetchInitRejected,
   fetchInitCanceled,
+  fetchInitRejected,
   incrementRequest,
   incrementSuccess,
-  incrementRejected,
   incrementCanceled,
-  decrementRequest,
+  incrementRejected,
   decrementSuccess,
+  decrementCanceled,
   decrementRejected,
-  decrementCanceled
+  decrementRequest
 } = counterSlice.actions
 
 export default counterSlice

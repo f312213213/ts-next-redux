@@ -1,51 +1,56 @@
 import { catchError, mergeMap, map, Observable, of, takeUntil } from 'rxjs'
 import { combineEpics, ofType } from 'redux-observable'
 import api from '../../api'
-import * as slice from './slice'
+import {
+  fetchInitRejected,
+  fetchInitSuccess,
+  fetchInitRequest,
+  fetchInitCanceled,
+  incrementSuccess,
+  incrementRequest,
+  incrementRejected,
+  incrementCanceled,
+  decrementSuccess,
+  decrementRequest,
+  decrementRejected,
+  decrementCanceled
+} from './slice'
 
 export const fetchInitRequestEpic = (action$: Observable<any>) => action$.pipe(
-  ofType(slice.fetchInitRequest.type),
-  mergeMap(() =>
-    api.counter.fetchInitData().pipe(
-      mergeMap(response => {
-        return of(slice.fetchInitSuccess(response))
+  ofType(fetchInitRequest.type),
+  mergeMap(() => {
+    return api.counter.fetchInitData().pipe(
+      map(response => {
+        return fetchInitSuccess(response)
       }),
-      takeUntil(action$.pipe(ofType(slice.fetchInitCanceled.type))),
-      catchError(() => of(slice.fetchInitRejected({})))
+      takeUntil(action$.pipe(ofType(fetchInitCanceled.type))),
+      catchError(() => of(fetchInitRejected()))
     )
-  )
+  })
 )
 
 export const incrementRequestEpic = (action$: Observable<any>) => action$.pipe(
-  ofType(slice.incrementRequest.type),
-  mergeMap(() =>
-    api.counter.fetchIncrementData().pipe(
-      mergeMap(response => {
-        return of(slice.incrementSuccess(response))
+  ofType(incrementRequest.type),
+  mergeMap(() => {
+    return api.counter.fetchIncrementData().pipe(
+      map(response => {
+        return incrementSuccess(response)
       }),
-      takeUntil(action$.pipe(ofType(slice.incrementCanceled.type))),
-      catchError(() => of(slice.incrementRejected({})))
+      takeUntil(action$.pipe(ofType(incrementCanceled.type))),
+      catchError(() => of(incrementRejected({})))
     )
-  )
+  })
 )
 
 export const decrementRequestEpic = (action$: Observable<any>) => action$.pipe(
-  ofType(slice.decrementRequest.type),
-  mergeMap(() =>
-    api.counter.fetchDecrementData().pipe(
-      mergeMap(response => {
-        return of(slice.decrementSuccess(response))
+  ofType(decrementRequest.type),
+  mergeMap(() => {
+    return api.counter.fetchDecrementData().pipe(
+      map(response => {
+        return decrementSuccess(response)
       }),
-      takeUntil(action$.pipe(ofType(slice.decrementCanceled.type))),
-      catchError(() => of(slice.decrementRejected({})))
+      takeUntil(action$.pipe(ofType(decrementCanceled.type))),
+      catchError(() => of(decrementRejected({})))
     )
-  )
+  })
 )
-
-const epics = combineEpics(
-  fetchInitRequestEpic,
-  incrementRequestEpic,
-  decrementRequestEpic
-)
-
-export default epics
