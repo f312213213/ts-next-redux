@@ -5,19 +5,20 @@ import { createEpicMiddleware } from 'redux-observable'
 import reducer from './reducer'
 import epics from './epics'
 
-const epicMiddleware = createEpicMiddleware()
-
-const store = configureStore({
-  reducer,
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), epicMiddleware]
-})
-
-export const makeStore = () => store
-
-epicMiddleware.run(epics)
+const makeStore = () => {
+  const epicMiddleware = createEpicMiddleware()
+  const store = configureStore({
+    reducer,
+    middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), epicMiddleware],
+    devTools: true
+  })
+  epicMiddleware.run(epics)
+  return store
+}
 
 export const wrapper = createWrapper(makeStore, {
   debug: true
 })
 
-export type RootState = ReturnType<typeof store.getState>
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;

@@ -4,7 +4,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../features/store'
-import { incrementRequest, decrementRequest } from '../features/counter/slice'
+import { decrementRequest, incrementRequest } from '../features/counter/slice'
 import Button from '../components/Button'
 
 const Home: NextPage = () => {

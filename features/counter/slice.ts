@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
-import { IState, IIncrementPayload, IDecrementPayload, IInitPayload } from './interface'
+import { IState } from './interface'
 
 const initialState: IState = {
   counter: 0,
@@ -12,11 +12,10 @@ const counterSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    // 有需要用 request 帶入 default 參數時才需要多用 reducer
     fetchInitRequest: (state) => {
       state.status = 'LOADING'
     },
-    fetchInitSuccess: (state, action: PayloadAction<IInitPayload>) => {
+    fetchInitSuccess: (state, action) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
@@ -29,12 +28,12 @@ const counterSlice = createSlice({
     incrementRequest: (state) => {
       state.status = 'LOADING'
     },
-    incrementSuccess: (state, action: PayloadAction<IIncrementPayload>) => {
+    incrementSuccess: (state, action) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
     },
-    incrementRejected: (state) => {
+    incrementRejected: (state, action) => {
       state.counter = 999
       state.status = 'FAILURE'
     },
@@ -42,12 +41,12 @@ const counterSlice = createSlice({
     decrementRequest: (state) => {
       state.status = 'LOADING'
     },
-    decrementSuccess: (state, action: PayloadAction<IDecrementPayload>) => {
+    decrementSuccess: (state, action) => {
       const { number } = action.payload
       state.counter = number
       state.status = 'SUCCESS'
     },
-    decrementRejected: (state) => {
+    decrementRejected: (state, action) => {
       state.counter = 999
       state.status = 'FAILURE'
     },
@@ -64,16 +63,16 @@ const counterSlice = createSlice({
 export const {
   fetchInitRequest,
   fetchInitSuccess,
-  fetchInitRejected,
   fetchInitCanceled,
+  fetchInitRejected,
   incrementRequest,
   incrementSuccess,
-  incrementRejected,
   incrementCanceled,
-  decrementRequest,
+  incrementRejected,
   decrementSuccess,
+  decrementCanceled,
   decrementRejected,
-  decrementCanceled
+  decrementRequest
 } = counterSlice.actions
 
 export default counterSlice

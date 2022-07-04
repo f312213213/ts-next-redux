@@ -1,9 +1,10 @@
 import { combineEpics } from 'redux-observable'
-import counter from './counter/epic'
-import app from './app/epic'
+import * as counter from './counter/epic'
 
-export default combineEpics(
-  counter,
-  // @ts-ignore
-  app
+const rootEpic = combineEpics(
+  ...Object.values({
+    ...counter
+  })
 )
+
+export default rootEpic
